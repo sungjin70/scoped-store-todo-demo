@@ -13,7 +13,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "webpack-env"
+      "webpack-env",
+      "node_modules/vue-scoped-store/vue-scoped-store.d.ts"
     ],
     "paths": {
       "@/*": [
