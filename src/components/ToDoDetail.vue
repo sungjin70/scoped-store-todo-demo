@@ -1,6 +1,6 @@
 <template>
     <v-card class="elevation-12">
-        <v-toolbar dark color="red lighten-1">
+        <v-toolbar dark :color="selectedTodoId >= 0 ? 'red lighten-1':'pink lighten-1'">
             <v-toolbar-title>{{ selectedTodoId >= 0 ? 'Edit Todo' : 'Create Todo' }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-btn icon @click="close()" >
@@ -74,45 +74,35 @@ export default class Home extends Vue {
     @GlobalStore({deep:true})
     private filter: Filter = {} as Filter;
 
+    @GlobalStoreReceived('todos') 
+    onTodosReceived(val:any): void {
+        console.log('onTodosReceived()', val);
+        this.todo = this.getEditTodo();
+    }
+
     @GlobalStoreReceived('selectedTodoId') 
     onSelectedTodoIdReceived(val:any): void {
         console.log('onSelectedTodoIdReceived()', val);
+        this.todo = this.getEditTodo();
+    }
+
+    // @GlobalStoreReceived('selectedTodoId') 
+    // onSelectedTodoIdReceived(val:any): void {
+    //     console.log('onSelectedTodoIdReceived()', val);
+    //     this.todo = this.getEditTodo();
+    // }
+
+    getEditTodo() {
         let todos = filterTodos(this.todos, this.filter);
         const idx = todos.findIndex(t => t.id === this.selectedTodoId);
+
+        let todo = null;
         if (idx != -1)
-            this.todo = {...todos[idx]};
+            todo = {...todos[idx]};
         else
-            this.todo = {};
-    }
+            todo = {};
 
-    save() : void {
-        const isValid = this.$refs.form.validate();
-
-        console.log('save()', isValid);
-        if (isValid) {
-            if (this.selectedTodoId >= 0) {
-                const idx = this.todos.findIndex(t => t.id === this.selectedTodoId);
-                this.todos[idx] = this.todo;
-                
-            }
-            else {
-                const newId = this.todos[this.todos.length-1].id + 1;
-                this.todo.id = newId;
-                this.todo.isDone = !!this.todo.isDone;
-                this.todos.push(this.todo);
-                this.selectedTodoId = newId;
-            }
-
-            this.todos = [...this.todos];
-
-            console.log('save()', this.todos, this.todo);
-        }
-
-    }
-
-    close(): void {
-        console.log('close()');
-        this.showEdit = false;
+        return todo;
     }
 
     get selectedTodo() : any {
@@ -123,6 +113,36 @@ export default class Home extends Vue {
             return {};
     }
 
+
+    save() : void {
+        const isValid = this.$refs.form.validate();
+
+        console.log('save()', isValid);
+        if (isValid) {
+            if (this.selectedTodoId >= 0) {
+                const idx = this.todos.findIndex(t => t.id === this.selectedTodoId);
+                this.todos[idx] = {...this.todo};
+            }
+            else {
+                const newId = this.todos[this.todos.length-1].id + 1;
+                this.todo.id = newId;
+                this.todo.isDone = !!this.todo.isDone;
+                this.todos.push({...this.todo});
+                this.selectedTodoId = newId;
+            }
+
+            this.todos = [...this.todos];
+            // this.close();
+
+            console.log('save()', this.todos, this.todo);
+        }
+
+    }
+
+    close(): void {
+        console.log('close()');
+        this.showEdit = false;
+    }
 
 }
 </script>

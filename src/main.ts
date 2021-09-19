@@ -6,7 +6,7 @@ import ScopedStore from "vue-scoped-store";
 
 Vue.config.productionTip = false
 
-Vue.use(ScopedStore);
+Vue.use(ScopedStore, {debug:process.env.NODE_ENV == 'development'});
 
 new Vue({
   router,

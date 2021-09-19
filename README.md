@@ -1,4 +1,6 @@
 # scoped-store-todo-demo
+A ToDo implementation using Scoped Store.
+Through this demonstration, I hope you get some ideas of using Scoped Store in practice.
 
 ## Project setup
 ```
@@ -14,11 +16,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

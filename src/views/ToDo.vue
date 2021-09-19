@@ -46,9 +46,9 @@
 
   </v-sheet>
 
-  <v-btn color="primary" @click="setTodosWithDefault()">setTodosWithDefault</v-btn>
+  <!-- <v-btn color="primary" @click="setTodosWithDefault()">setTodosWithDefault</v-btn>
   <br />
-  {{todos}}
+  {{todos}} -->
 
 </div>
   
@@ -60,7 +60,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import ToDoList from '../components/ToDoList.vue';
 import ToDoFilter from '../components/ToDoFilter.vue';
 import ToDoDetail from '../components/ToDoDetail.vue';
-import { GlobalStore, GlobalStoreReceived, GlobalStoreBeforeReceive } from 'vue-scoped-store';
+import { GlobalStore, GlobalStoreReceived } from 'vue-scoped-store';
 import Todo from '../models/todo';
 
 @Component({
@@ -71,28 +71,34 @@ import Todo from '../models/todo';
   },
 })
 export default class Home extends Vue {
+
   @GlobalStore()
   private showEdit = false;
 
   @GlobalStore()
-  private todos : Array<Todo> = [];
+  private todos : Array<Todo> | null = null;
 
   @GlobalStore()
   private selectedTodoId = -1;
 
   @GlobalStoreReceived('selectedTodoId') 
-  onBeforeselectedTodoIdChange(val:any): void {
-    console.log('onBeforeselectedTodoIdChange', val);
+  onSelectedTodoIdReceived(val:any): void {
+    console.log('onSelectedTodoIdReceived', val);
     if (this.selectedTodoId !== -1)
       this.showEdit = true;
   }
 
-  // @GlobalStoreBeforeReceive('selectedTodoId')
-  // onBeforeSelectedTodoIdChange(val:any, oldVal:any, options:{proceed:boolean}): void {
-  //     console.log('onBeforeSelectedTodoIdChange in ToDo.vue', val, oldVal, options);
-  //     if (this.selectedTodoId !== -1)
-  //       this.showEdit = true;
-  // }
+  @GlobalStoreReceived('todos') 
+  onTodosReceived(val:any): void {
+    console.log('onTodosReceived', val);
+  }
+
+
+  created(): void {
+    // console.log('created()', this.todos);
+    if (this.todos == null)
+      this.setTodosWithDefault();  
+  }
 
   setTodosWithDefault() : void {
     this.todos = [
