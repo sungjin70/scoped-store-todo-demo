@@ -1,3 +1,8 @@
+/**
+ * Todo 형식 정의
+ * 
+ * Type definition of Todo
+ */
 export default interface Todo {
     id: number;
     title: string;
@@ -5,4 +10,3 @@ export default interface Todo {
     isBusiness?: boolean;
     isPrivate?: boolean;
 }
-  

@@ -1,66 +1,96 @@
 <template>
 
-    <ul>
-        <li v-for="(todo, i) in todoList"
-            :key="i"
-            :class="{ active: selectedTodoId === todo.id }"
-            class="transition-swing text-subtitle-1"
-            @click="selectedTodoId = todo.id">
-            {{ todo.title }} 
-            <v-spacer></v-spacer>
-            <v-chip
-                v-if="todo.isBusiness"
-                class="ma-2 text-subtitle-3"
-                color="green"
-                text-color="white"
-                >
-                Business
-            </v-chip>
-            <v-chip
-                v-if="todo.isPrivate"
-                class="ma-2 text-subtitle-3"
-                color="secondary"
-                text-color="white"
-                >
-                Private
-            </v-chip>
-        </li>
-    </ul>
+    <v-card class="elevation-12">
+        <v-toolbar dark :color="done ? 'blue lighten-1' : 'gray lighten-2'">
+            <v-toolbar-title>Todos Done</v-toolbar-title>
+        </v-toolbar>
+        <v-card-text>
+        <ul>
+            <li v-for="(todo, i) in todoList"
+                :key="i"
+                :class="{ active: selectedTodoId === todo.id }"
+                class="transition-swing text-subtitle-1"
+                @click="selectedTodoId = todo.id">
+                {{ todo.title }} 
+                <v-spacer></v-spacer>
+                <v-chip
+                    v-if="todo.isBusiness"
+                    class="ma-2 text-subtitle-3"
+                    color="green"
+                    text-color="white"
+                    >
+                    Business
+                </v-chip>
+                <v-chip
+                    v-if="todo.isPrivate"
+                    class="ma-2 text-subtitle-3"
+                    color="secondary"
+                    text-color="white"
+                    >
+                    Private
+                </v-chip>
+            </li>
+        </ul>
+        </v-card-text>
+    </v-card>
 
 </template>
 
 <script lang="ts">
-import { Filter, filterTodos } from '@/models/filter';
+import Filter from '@/models/filter';
+import {filterTodos} from '@/utils/common-functions';
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import {GlobalStore, GlobalStoreBeforeReceive} from 'vue-scoped-store';
+import {GlobalStore} from 'vue-scoped-store';
 import Todo from '../models/todo';
 
+/**
+ * ToDo 목록 출력 컴포넌트
+*/
 @Component
 export default class extends Vue {
-
+    /**
+     * ToDo 완료 전과 후 구분
+    */
     @Prop()
     private done! : boolean;
 
+  /**
+   * ToDo 목록
+   * 
+   * todos에 설정하는 []값은 변수 값을 공유할 수 있도록하기 위해 필요하다.
+   * ToDo.vue의 todos와 초기화 하는 값이 다른 대에는 큰 비밀이 있는 것은 아니다.
+   * 여기에서는 TypeScript 문법 상 []를 사용하는 것이 더 편하기 때문인데,
+   * 뒤에 나오는 filterTodos함수 인자로 Array<Todo> | null 타입을 사용할 수 없어서다.
+  */
     @GlobalStore()
     private todos : Array<Todo> = [];
 
+  /**
+   * 선택된 ToDo의 ID.
+   * 
+   * selectedTodoId에 설정하는 -1은 변수 값을 공유할 수 있도록하기 위해 필요하다.
+  */
     @GlobalStore()
     private selectedTodoId = -1;
 
-    @GlobalStore({deep:true})
+  /**
+   * todos를 필터링하기 위한 조건.
+   * 
+   * filter에 설정하는 {}은 변수 값을 공유할 수 있도록하기 위해 필요하다.
+   * ToDoFilter.vue의 filter에서와는 다르게 @GlobalStore의 인자로 deep를 사용할 필요가 없다.
+   * 여기에서 filter의 역할은 ToDoFilter.vue에서 전달되는 값을 수신만하면되기 때문이다.
+  */
+    @GlobalStore()
     private filter: Filter = {} as Filter;
 
+  /**
+   * 탬플릿에서 필터링된 todos를 렌더링하기 위한 배열을 반환하는 getter.
+  */
     get todoList() : Array<Todo> {
         const showDone = this.done;
         let todos = filterTodos(this.todos, this.filter).filter(t => t.isDone === showDone);
         return todos;
     }
-
-    // @GlobalStoreBeforeReceive('selectedTodoId')
-    // onBeforeSelectedTodoIdChange(val:any, oldVal:any, options:{proceed:boolean}): void {
-    //     console.log('onBeforeSelectedTodoIdChange in ToDoList.vue', val, oldVal, options);
-    // }
-
 }
 </script>
 
