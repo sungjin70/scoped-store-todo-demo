@@ -1,13 +1,7 @@
 <template>
 <v-container >
     <v-toolbar height="70px" flat dark color="secondary" >
-      <v-toolbar-title>Todo</v-toolbar-title>
-
-      <v-btn class="ml-10" @click="selectedTodoId = -2">
-        Add Todo
-      </v-btn>      
-
-      <v-spacer></v-spacer>
+      <v-toolbar-title>Search</v-toolbar-title>
 
       <v-text-field
           placeholder="title"
@@ -15,6 +9,7 @@
           light
           solo
           v-model="filter.search"
+          class="ml-6" 
       ></v-text-field>
       <v-checkbox
           label="Private"
@@ -28,6 +23,10 @@
           class="ml-2"
           v-model="filter.category.isBusiness"
       ></v-checkbox>
+      <v-spacer></v-spacer>
+      <v-btn @click="selectedTodoId = -2">
+        Add Todo
+      </v-btn>
     </v-toolbar>
 </v-container>
 
