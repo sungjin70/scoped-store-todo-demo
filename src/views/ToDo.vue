@@ -50,9 +50,9 @@ import { GlobalStore, GlobalStoreReceived } from 'vue-scoped-store';
 import Todo from '../models/todo';
 
 /**
- * ToDo 페이지 컴포넌트.
+ * to-do 페이지 컴포넌트.
  * 
- * A ToDo component that serve as a page.
+ * A component that allows users to manage their to-do lists, which serve as a page.
 */
 @Component({
   components: {
@@ -64,14 +64,14 @@ import Todo from '../models/todo';
 export default class extends Vue {
 
   /**
-   * 속성에 @GlobalStore 데코레이터를 달아주면 해당 속성 값은 전역으로 공유된다.
+   * 속성에 @GlobalStore 데코레이터를 달아주면 해당 속성은 ScopedStore에 의해 관리되고 속성 값은 전역으로 공유된다.
    * 
    * 속성이 선언되는 시점에 설정되는 초기 값은 어플리케이션 전역으로 공유되지 않는다는 
    * 특징은 ScopedStore를 사용하기 위해 이해야하는 중요한 포인트다.
    * 하지만, 속성변수 선언 시점에 의미 없는 값이라도 설정을 해야한다.
    * Vue에서는 속성 선언 시에 undefined를 제외한 어떤 값이든 설정해야 속성이 반응형이 되기 때문이다.
    * 
-   * If you decorate a property with a @GlobalStore, the property's value is shared globally.
+   * If you decorate a property with a @GlobalStore, the property's value is managed by ScopedStore and shared globally.
    * 
    * A initial value assigned at declaring a property is not shared to others, 
    * this is something important that you have to understand in order to use the ScopedStore.
@@ -91,20 +91,20 @@ export default class extends Vue {
   private showEdit = false; 
 
   /**
-   * 선택된 ToDo의 ID.
+   * 선택된 to-do의 ID.
    * selectedTodoId에 설정하는 -1은 향후 변수 값을 공유할 수 있도록하기 위해 필요하다.
    * 
-   * ID of a selected ToDo.
+   * ID of a selected to-do.
    * The -1 assigned to selectedToId is necessary to share the variable value.
   */
   @GlobalStore()
   private selectedTodoId = -1;
 
   /**
-   * ToDo 목록
+   * to-do 목록
    * todos에 설정하는 null값은 향후 변수 값을 공유할 수 있도록하기 위해 필요하다.
    * 
-   * An array variable of the list of the ToDo
+   * An array variable of the list of the to-do
    * The null assigned to todos is necessary to share the variable value.
   */
   @GlobalStore()
@@ -139,7 +139,7 @@ export default class extends Vue {
      * https://kr.vuejs.org/v2/guide/instance.html#라이프사이클-다이어그램
      * 
      * From the created stage of the Vue component, 
-     * every time the property decorated with @GlobalStore is changed, it propagates globally.
+     * every time a property managed by ScopedStore is changed, it propagates globally.
      * More accurately, all changes happened in the range of the steps from created to before BeforeDestory will be shared.
      * https://vuejs.org/v2/guide/instance.html#Lifecycle-Diagram
     */

@@ -25,7 +25,7 @@
       ></v-checkbox>
       <v-spacer></v-spacer>
       <v-btn @click="selectedTodoId = -2">
-        Add Todo
+        Add to-do
       </v-btn>
     </v-toolbar>
 </v-container>
@@ -38,7 +38,7 @@ import { GlobalStore } from 'vue-scoped-store';
 import Filter from '@/models/filter';
 
 /**
- * ToDo 검색 툴바 컴포넌트
+ * to-do 검색 툴바 컴포넌트
  * 
  * A component that serve a search toolbar
 */
@@ -48,7 +48,7 @@ export default class extends Vue {
    * 선택된 ToDo의 ID.
    * selectedTodoId에 설정하는 -1은 변수 값을 공유할 수 있도록하기 위해 필요하다.
    * 
-   * ID of a selected ToDo.
+   * ID of a selected to-do.
    * The -1 assigned to selectedToId is necessary to share the variable value.
   */
   @GlobalStore()
@@ -65,7 +65,7 @@ export default class extends Vue {
    * 
    * The parameter deep of @GlobalStore is for detecting changes in any nested properties of the filter.
    * Internally, ScopedStore uses Vue's watch option to detect changes in any property values, 
-   * and the deep parameter are just handed over to watch.
+   * and the deep parameter is just handed over to watch.
    * Therefore, to understand in more detail what the deep parameter does, 
    * refer to a literature related to the watch option.
    * https://michaelnthiessen.com/how-to-watch-nested-data-vue/

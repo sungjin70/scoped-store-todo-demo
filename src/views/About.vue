@@ -69,14 +69,14 @@ import { GlobalStore } from 'vue-scoped-store';
 export default class extends Vue {
 
   /**
-   * 속성에 @GlobalStore 데코래이터를 달아주면 해당 속성 값은 전역으로 공유된다.
+   * 속성에 @GlobalStore 데코레이터를 달아주면 해당 속성은 ScopedStore에 의해 관리되고 속성 값은 전역으로 공유된다.
    * 
    * 이 컴포넌트 안에서는 속성들의 값을 직접 수정하지 않는다.
    * 다른 곳에서 같은 이름의 속성에 설정된 값들을 여기서는 보여주기만 한다.
    * 각 속성변수들을 선언할 때 의미없는 값이지만 반드시 설정해줘야 변수간 공유가 동작한다.
    * 
    * 
-   * When you decorate a property with a @GlobalStore, the property's value is shared globally.
+   * If you decorate a property with a @GlobalStore, the property's value is managed by ScopedStore and shared globally.
    * In this component, the values of properties are not directly modified.
    * 
    * When declaring each property variable, sharing between variables works only when any value, 

@@ -1,5 +1,5 @@
 # scoped-store-todo-demo
-A ToDo implementation using ScopedStore.
+A to-do implementation using ScopedStore.
 
 To show how to use ScopedStore, this demonstration does not use props, provider/injects, and VueX, which are the basic state-sharing methods provided by Vue.
 

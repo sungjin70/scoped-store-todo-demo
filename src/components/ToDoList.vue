@@ -45,19 +45,21 @@ import Todo from '../models/todo';
 
 /**
  * ToDo 목록 출력 컴포넌트
+ * 
+ * A component that display the to-do list
 */
 @Component
 export default class extends Vue {
     /**
-     * ToDo 완료 전과 후 구분
+     * to-do 목록의 완료 전과 후 구분
      * 
-     * A variable that distinguish what to do before and after completion.
+     * A property that distinguish before and after completion of this to-do list
     */
     @Prop()
     private done! : boolean;
 
   /**
-   * ToDo 목록
+   * to-do 목록
    * 
    * todos에 설정하는 []값은 변수 값을 공유할 수 있도록하기 위해 필요하다.
    * ToDo.vue의 todos와 초기화 하는 값이 다른 대에는 큰 비밀이 있는 것은 아니다.
@@ -65,7 +67,7 @@ export default class extends Vue {
    * 뒤에 나오는 filterTodos함수 인자로 Array<Todo> | null 타입을 사용할 수 없어서다.
    * 
    * 
-   * An array variable of the list of the ToDo
+   * An array property of the list of the to-do
    * 
    * Setting [] value is necessary for todos to be managed by ScopedStore.
    * Here, there is no big secret that the value, which is [], to initialize is different from the todos of ToDo.vue.
@@ -81,7 +83,7 @@ export default class extends Vue {
    * selectedTodoId에 설정하는 -1은 변수 값을 공유할 수 있도록하기 위해 필요하다.
    * 
    * 
-   * ID of a selected ToDo.
+   * ID of a selected to-do.
    * 
    * Setting -1 value is necessary for selectedTodoId to be managed by ScopedStore.
   */
