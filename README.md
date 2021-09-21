@@ -1,5 +1,8 @@
 # scoped-store-todo-demo
-A to-do implementation using ScopedStore.
+A to-do implementation using ScopedStore with TypeScript and decorations.
+
+If you want see another to-do implementation without TypeScript and decorations, 
+please check [scoped-store-todo-demo-wod](https://github.com/sungjin70/scoped-store-todo-demo-wod) repository.
 
 To show how to use ScopedStore, this demonstration does not use props, provider/injects, and VueX, which are the basic state-sharing methods provided by Vue.
 
